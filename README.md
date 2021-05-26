@@ -1,56 +1,23 @@
 # reproduce-hash-issue
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Reproduces an issue with the `hash` helper introduced in the latest ember beta version.
 
-## Prerequisites
+### Steps to reproduce
+1. Run ember s
+2. Open the console to see the error
 
-You will need the following things properly installed on your computer.
+```
+Uncaught TypeError: Cannot destructure property 'tag' of 'ref' as it is undefined.
+    at valueForRef (reference.js:144)
+    at runtime.js:6931
+    at track (validator.js:820)
+    at tagForKey (runtime.js:6931)
+    at runtime.js:7006
+    at tagForProperty (index.js:516)
+    at getChainTags (index.js:907)
+    at getChainTagsForKeys (index.js:824)
+    at ComputedProperty.get (index.js:1939)
+    at ExampleComponentComponent.getter [as label] (index.js:1024)
+```
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with npm)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
-
-## Installation
-
-* `git clone <repository-url>` this repository
-* `cd reproduce-hash-issue`
-* `npm install`
-
-## Running / Development
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Linting
-
-* `npm run lint`
-* `npm run lint:fix`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+The issue is raised when there is a computed property that observes a property of an object created with the `hash` helper and the observed property is undefined.
